@@ -1,39 +1,50 @@
 const fs = require('fs');
 
 class Form {
+  #index;
+  #details;
+  #fields;
   constructor() {
-    this.fields = [];
-    this.index = 0;
-    this.details = {};
+    this.#fields = [];
+    this.#index = 0;
+    this.#details = {};
   }
 
   #outOfIndex() {
-    return this.index >= this.fields.length;
+    return this.#index >= this.#fields.length;
+  }
+
+  getFirstQuestion() {
+    return this.#fields[0].question;
   }
 
   #endStdIn() {
     process.stdin.emit('end');
   }
 
-  addField(field, question, validator) {
-    this.fields.push({ field, question, validator });
+  getDetails() {
+    return this.#details;
   }
 
-  takeInput(detail) {
-    if (this.fields[this.index].validator(detail)) {
-      this.details[this.fields[this.index].field] = detail;
-      if (this.fields[this.index].field === 'hobbies') {
-        this.details[this.fields[this.index].field] = detail.split(',');
+  addField(field, question, validator) {
+    this.#fields.push({ field, question, validator });
+  }
+
+  addInput(detail) {
+    if (this.#fields[this.#index].validator(detail)) {
+      this.#details[this.#fields[this.#index].field] = detail;
+      if (this.#fields[this.#index].field === 'hobbies') {
+        this.#details[this.#fields[this.#index].field] = detail.split(',');
       }
-      this.index++;
+      this.#index++;
       if (this.#outOfIndex()) {
         return this.#endStdIn();
       }
-      console.log(this.fields[this.index].question);
+      console.log(this.#fields[this.#index].question);
       return;
     }
     console.log('Invalid input');
-    console.log(this.fields[this.index].question);
+    console.log(this.#fields[this.#index].question);
   }
 }
 
@@ -60,13 +71,14 @@ const main = () => {
   form.addField('dob', 'Please enter your dob', isValidDob);
   form.addField('hobbies', 'Please enter your hobbies', areValidHobbies);
   form.addField('phNum', 'Please enter your phone number', isPhNumValid);
-  console.log(form.fields[0].question);
+  console.log(form.getFirstQuestion());
   process.stdin.on('data', (chunk) => {
     const detail = chunk.split('\n')[0];
-    form.takeInput(detail);
+    form.addInput(detail);
   });
   process.stdin.on('end', () => {
-    fs.writeFileSync('./details.json', JSON.stringify(form.details), 'utf8');
+    const details = form.getDetails();
+    fs.writeFileSync('./details.json', JSON.stringify(details), 'utf8');
     console.log('Thank You!!');
     process.exit();
   });
