@@ -1,10 +1,8 @@
 const fs = require('fs');
 
 class Form {
-  constructor(fields, validators, questions) {
-    this.fields = fields;
-    this.validators = validators;
-    this.questions = questions;
+  constructor() {
+    this.fields = [];
     this.index = 0;
     this.details = {};
   }
@@ -17,21 +15,25 @@ class Form {
     process.stdin.emit('end');
   }
 
+  addField(field, question, validator) {
+    this.fields.push({ field, question, validator });
+  }
+
   takeInput(detail) {
-    if (this.validators[this.index](detail)) {
-      this.details[this.fields[this.index]] = detail;
-      if (this.fields[this.index] === 'hobbies') {
-        this.details[this.fields[this.index]] = detail.split(',');
+    if (this.fields[this.index].validator(detail)) {
+      this.details[this.fields[this.index].field] = detail;
+      if (this.fields[this.index].field === 'hobbies') {
+        this.details[this.fields[this.index].field] = detail.split(',');
       }
       this.index++;
       if (this.#outOfIndex()) {
         return this.#endStdIn();
       }
-      console.log(this.questions[this.index]);
+      console.log(this.fields[this.index].question);
       return;
     }
     console.log('Invalid input');
-    console.log(this.questions[this.index]);
+    console.log(this.fields[this.index].question);
   }
 }
 
@@ -47,24 +49,18 @@ const areValidHobbies = (hobbies) => {
   return hobbies !== '';
 };
 
-const isPhoneNumberValid = (phoneNumber) => {
+const isPhNumValid = (phoneNumber) => {
   return /^\d.*$/.test(phoneNumber) && phoneNumber.length === 10;
 };
 
 const main = () => {
-  const fields = ['name', 'dob', 'hobbies', 'phoneNumber'];
-  const validators = [
-    isValidName, isValidDob, areValidHobbies, isPhoneNumberValid
-  ];
-  const questions = [
-    'Please enter your name',
-    'Please enter your DOB',
-    'Please enter your hobbies',
-    'Please enter your phone number'
-  ];
   process.stdin.setEncoding('utf8');
-  const form = new Form(fields, validators, questions);
-  console.log('Please enter your', fields[0]);
+  const form = new Form();
+  form.addField('name', 'Please enter your name', isValidName);
+  form.addField('dob', 'Please enter your dob', isValidDob);
+  form.addField('hobbies', 'Please enter your hobbies', areValidHobbies);
+  form.addField('phNum', 'Please enter your phone number', isPhNumValid);
+  console.log(form.fields[0].question);
   process.stdin.on('data', (chunk) => {
     const detail = chunk.split('\n')[0];
     form.takeInput(detail);
