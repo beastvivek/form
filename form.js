@@ -1,11 +1,11 @@
 const fs = require('fs');
 
 const isValidName = (name) => {
-  return name.length >= 5 && /[0-9]/.test(name);
+  return name.length >= 5 && !/[0-9]/.test(name);
 };
 
 const isValidDob = (dob) => {
-  return /^\d-\d-\d$/.test(dob);
+  return /^\d\d\d\d-\d\d-\d\d$/.test(dob);
 };
 
 const areValidHobbies = (hobbies) => {
@@ -24,13 +24,14 @@ const main = () => {
     if (validators[counter](userDetails)) {
       details[fields[counter]] = userDetails;
       counter++;
+      if (counter >= fields.length) {
+        fs.writeFileSync('./details.json', JSON.stringify(details), 'utf8');
+        process.stdin.emit('end');
+      }
       console.log('Please enter your', fields[counter]);
     } else {
       console.log('Invalid Input');
-    }
-    if (counter >= fields.length) {
-      fs.writeFileSync('./details.json', JSON.stringify(details), 'utf8');
-      process.stdin.emit('end');
+      console.log('Please enter your', fields[counter]);
     }
   });
   process.stdin.on('end', () => {
