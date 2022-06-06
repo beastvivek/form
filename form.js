@@ -20,6 +20,9 @@ class Form {
   takeInput(detail) {
     if (this.validators[this.index](detail)) {
       this.details[this.fields[this.index]] = detail;
+      if (this.fields[this.index] === 'hobbies') {
+        this.details[this.fields[this.index]] = detail.split(',');
+      }
       this.index++;
       if (this.#outOfIndex()) {
         return this.#endStdIn();
