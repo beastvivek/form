@@ -29,7 +29,11 @@ const areValidHobbies = (hobbies) => {
   return hobbies !== '';
 };
 
-const isPhNumValid = (phoneNumber) => {
+const isValidAddress = (address) => {
+  return address !== '';
+};
+
+const isValidPhNum = (phoneNumber) => {
   return /^\d{10}$/.test(phoneNumber);
 };
 
@@ -55,7 +59,9 @@ const main = () => {
   form.addField('name', 'Please enter your name', isValidName, identity);
   form.addField('dob', 'Please enter your dob', isValidDob, identity);
   form.addField('hobbies', 'Please enter your hobbies', areValidHobbies, parseHobbies);
-  form.addField('phNum', 'Please enter your phone number', isPhNumValid, identity);
+  form.addField('phNum', 'Please enter your phone number', isValidPhNum, identity);
+  form.addField('address', 'Please enter your address line 1', isValidAddress, identity);
+  form.addField('address', 'Please enter your address line 2', isValidAddress, identity);
 
   readInput(form);
 };

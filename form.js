@@ -31,6 +31,11 @@ class Form {
   register(detail) {
     const field = this.#fields[this.#index];
     if (field.validator(detail)) {
+      if (this.#details[field.title]) {
+        this.#details[field.title] = `${this.#details[field.title]}\n${this.#fields[this.#index].parser(detail)}`;
+        this.#incrementIndex();
+        return;
+      }
       this.#details[field.title] = this.#fields[this.#index].parser(detail);
       this.#incrementIndex();
     }
