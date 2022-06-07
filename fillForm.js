@@ -1,6 +1,22 @@
 const fs = require('fs');
 const { Form } = require('./form.js');
 
+const writeToFile = (form) => {
+  const details = form.getDetails();
+  fs.writeFileSync('./details.json', JSON.stringify(details), 'utf8');
+  console.log('Thank You!!');
+  process.exit();
+};
+
+const fillForm = (chunk, form) => {
+  const detail = chunk.split('\n')[0];
+  form.register(detail);
+  if (form.outOfIndex()) {
+    process.stdin.emit('end');
+  }
+  console.log(form.currentQuestion());
+};
+
 const isValidName = (name) => {
   return name.length >= 5 && !/[0-9]/.test(name);
 };
@@ -25,19 +41,11 @@ const readInput = (form) => {
   console.log(form.currentQuestion());
 
   process.stdin.on('data', (chunk) => {
-    const detail = chunk.split('\n')[0];
-    form.register(detail);
-    if (form.outOfIndex()) {
-      process.stdin.emit('end');
-    }
-    console.log(form.currentQuestion());
+    fillForm(chunk, form);
   });
 
   process.stdin.on('end', () => {
-    const details = form.getDetails();
-    fs.writeFileSync('./details.json', JSON.stringify(details), 'utf8');
-    console.log('Thank You!!');
-    process.exit();
+    writeToFile(form);
   });
 };
 
