@@ -8,7 +8,7 @@ class Form {
     this.#details = {};
   }
 
-  #outOfIndex() {
+  outOfIndex() {
     return this.#index >= this.#fields.length;
   }
 
@@ -20,33 +20,20 @@ class Form {
     this.#index++;
   }
 
-  #endStdIn() {
-    process.stdin.emit('end');
-  }
-
   getDetails() {
     return this.#details;
   }
 
-  addField(field, question, validator) {
-    this.#fields.push({ field, question, validator });
+  addField(title, question, validator, parser) {
+    this.#fields.push({ title, question, validator, parser });
   }
 
-  addInput(detail) {
-    if (this.#fields[this.#index].validator(detail)) {
-      this.#details[this.#fields[this.#index].field] = detail;
-      if (this.#fields[this.#index].field === 'hobbies') {
-        this.#details[this.#fields[this.#index].field] = detail.split(',');
-      }
+  register(detail) {
+    const field = this.#fields[this.#index];
+    if (field.validator(detail)) {
+      this.#details[field.title] = this.#fields[this.#index].parser(detail);
       this.#incrementIndex();
-      if (this.#outOfIndex()) {
-        return this.#endStdIn();
-      }
-      console.log(this.#fields[this.#index].question);
-      return;
     }
-    console.log('Invalid input');
-    console.log(this.#fields[this.#index].question);
   }
 }
 
