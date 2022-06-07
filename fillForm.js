@@ -19,7 +19,7 @@ const isPhNumValid = (phoneNumber) => {
 
 const identity = (element) => element;
 
-const parseHobbies = (hobbies) => hobbies.split('\n');
+const parseHobbies = (hobbies) => hobbies.split(',');
 
 const readInput = (form) => {
   console.log(form.currentQuestion());
