@@ -31,11 +31,11 @@ const createForm = () => {
   return form;
 };
 
-const fillForm = (chunk, form, logger, writeToFile) => {
+const fillForm = (chunk, form, logger, callBack) => {
   const detail = chunk.split('\n')[0];
   form.fillField(detail);
   if (form.isFormFilled()) {
-    writeToFile(form);
+    callBack(form.getDetails());
     return;
   }
   logger(form.currentQuestion());

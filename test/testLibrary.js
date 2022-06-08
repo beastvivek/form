@@ -43,8 +43,8 @@ describe('fillForm', () => {
     const nameField = new Field('name', 'Enter name', alwaysTrue, identity);
     const form = new Form(nameField);
     let callbackText = '';
-    const callback = (form) => {
-      callbackText = form.getDetails();
+    const callback = (text) => {
+      callbackText = text;
     };
     fillForm('vivek', form, identity, callback);
     assert.deepStrictEqual(callbackText, { name: 'vivek' });

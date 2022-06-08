@@ -1,8 +1,7 @@
 const fs = require('fs');
 const { createForm, fillForm } = require('./src/library.js');
 
-const writeToFile = (form) => {
-  const details = form.getDetails();
+const writeToFile = (details) => {
   fs.writeFileSync('./details.json', JSON.stringify(details), 'utf8');
   console.log('Thank You!!');
   process.exit();
