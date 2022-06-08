@@ -1,4 +1,5 @@
 const fs = require('fs');
+const { Field } = require('./field.js');
 const { Form } = require('./form.js');
 
 const writeToFile = (form) => {
@@ -10,8 +11,8 @@ const writeToFile = (form) => {
 
 const fillForm = (chunk, form) => {
   const detail = chunk.split('\n')[0];
-  form.register(detail);
-  if (form.outOfIndex()) {
+  form.fillField(detail);
+  if (form.isFormFilled()) {
     process.stdin.emit('end');
   }
   console.log(form.currentQuestion());
@@ -25,16 +26,12 @@ const isValidDob = (dob) => {
   return /^\d{4}-\d{2}-\d{2}$/.test(dob);
 };
 
-const areValidHobbies = (hobbies) => {
-  return hobbies !== '';
+const isNotEmpty = (text) => {
+  return text !== '';
 };
 
-const isValidAddress = (address) => {
-  return address !== '';
-};
-
-const isValidPhNum = (phoneNumber) => {
-  return /^\d{10}$/.test(phoneNumber);
+const isValidPhoneNumber = (number) => {
+  return /^\d{10}$/.test(number);
 };
 
 const identity = (element) => element;
@@ -55,13 +52,12 @@ const readInput = (form) => {
 
 const main = () => {
   process.stdin.setEncoding('utf8');
-  const form = new Form();
-  form.addField('name', 'Please enter your name', isValidName, identity);
-  form.addField('dob', 'Please enter your dob', isValidDob, identity);
-  form.addField('hobbies', 'Please enter your hobbies', areValidHobbies, parseHobbies);
-  form.addField('phNum', 'Please enter your phone number', isValidPhNum, identity);
-  form.addField('address', 'Please enter your address line 1', isValidAddress, identity);
-  form.addField('address', 'Please enter your address line 2', isValidAddress, identity);
+  const nameField = new Field('name', 'Please enter your name', isValidName, identity);
+  const dobField = new Field('dob', 'Please enter your dob', isValidDob, identity);
+  const hobbiesField = new Field('hobbies', 'Please enter your hobbies', isNotEmpty, parseHobbies);
+  const phoneNumField = new Field('phoneNum', 'Please enter your phone number', isValidPhoneNumber, identity);
+
+  const form = new Form(nameField, dobField, hobbiesField, phoneNumField);
 
   readInput(form);
 };

@@ -1,45 +1,39 @@
 class Form {
   #index;
-  #details;
   #fields;
-  constructor() {
-    this.#fields = [];
+  constructor(...fields) {
+    this.#fields = fields;
     this.#index = 0;
-    this.#details = {};
   }
 
-  outOfIndex() {
-    return this.#index >= this.#fields.length;
+  isFormFilled() {
+    return this.#fields.every((field) => {
+      return field.isFilled();
+    });
+  }
+
+  #currentField() {
+    return this.#fields[this.#index];
   }
 
   currentQuestion() {
-    return this.#fields[this.#index].question;
-  }
-
-  #incrementIndex() {
-    this.#index++;
+    return this.#currentField().getQuestion();
   }
 
   getDetails() {
-    return this.#details;
+    return this.#fields.reduce((details, field) => {
+      const { title, response } = field.getResponse();
+      details[title] = response;
+      return details;
+    }, {});
   }
 
-  addField(title, question, validator, parser) {
-    this.#fields.push({ title, question, validator, parser });
-  }
-
-  register(detail) {
-    const field = this.#fields[this.#index];
-    if (field.validator(detail)) {
-      if (this.#details[field.title]) {
-        this.#details[field.title] = `${this.#details[field.title]}\n${this.#fields[this.#index].parser(detail)}`;
-        this.#incrementIndex();
-        return;
-      }
-      this.#details[field.title] = this.#fields[this.#index].parser(detail);
-      this.#incrementIndex();
+  fillField(response) {
+    if (this.#currentField().validate(response)) {
+      this.#currentField().fillField(response);
+      this.#index++;
     }
   }
 }
 
-exports.Form = Form;
+module.exports = { Form };
