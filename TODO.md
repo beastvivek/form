@@ -1,12 +1,12 @@
 ## TODO
-  - [ ] Test library
-  - [ ] Mock console log for testing
+  - [ ] Mock console log for testing fill form
   - [ ] Create a multiLineField class for address
   - [ ] Separate chunk with new lines
   - [ ] Remove end instead call a callback
   - [ ] Make main tests
 
 ## DONE
+  - [x] Test validations 
   - [x] Test Form and Field
   - [x] Send all dependencies from main
   - [x] Send the call back function from main

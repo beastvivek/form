@@ -19,12 +19,12 @@ const isValidPhoneNumber = (number) => {
 
 const identity = (element) => element;
 
-const parseHobbies = (hobbies) => hobbies.split(',');
+const splitOnCommas = (text) => text.split(',');
 
 const getForm = () => {
   const nameField = new Field('name', 'Please enter your name', isValidName, identity);
   const dobField = new Field('dob', 'Please enter your dob', isValidDob, identity);
-  const hobbiesField = new Field('hobbies', 'Please enter your hobbies', isNotEmpty, parseHobbies);
+  const hobbiesField = new Field('hobbies', 'Please enter your hobbies', isNotEmpty, splitOnCommas);
   const phoneNumField = new Field('phoneNum', 'Please enter your phone number', isValidPhoneNumber, identity);
 
   const form = new Form(nameField, dobField, hobbiesField, phoneNumField);
@@ -40,4 +40,6 @@ const fillForm = (chunk, form, logger, writeToFile) => {
   logger(form.currentQuestion());
 };
 
-module.exports = { getForm, fillForm };
+module.exports = {
+  getForm, fillForm, isValidName, isValidDob, isNotEmpty, isValidPhoneNumber
+};
