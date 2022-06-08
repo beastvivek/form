@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { getForm, fillForm } = require('./src/library.js');
+const { createForm, fillForm } = require('./src/library.js');
 
 const writeToFile = (form) => {
   const details = form.getDetails();
@@ -10,7 +10,7 @@ const writeToFile = (form) => {
 
 const main = () => {
   process.stdin.setEncoding('utf8');
-  const form = getForm();
+  const form = createForm();
 
   console.log(form.currentQuestion());
 

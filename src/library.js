@@ -21,7 +21,7 @@ const identity = (element) => element;
 
 const splitOnCommas = (text) => text.split(',');
 
-const getForm = () => {
+const createForm = () => {
   const nameField = new Field('name', 'Please enter your name', isValidName, identity);
   const dobField = new Field('dob', 'Please enter your dob', isValidDob, identity);
   const hobbiesField = new Field('hobbies', 'Please enter your hobbies', isNotEmpty, splitOnCommas);
@@ -36,10 +36,11 @@ const fillForm = (chunk, form, logger, writeToFile) => {
   form.fillField(detail);
   if (form.isFormFilled()) {
     writeToFile(form);
+    return;
   }
   logger(form.currentQuestion());
 };
 
 module.exports = {
-  getForm, fillForm, isValidName, isValidDob, isNotEmpty, isValidPhoneNumber
+  createForm, fillForm, isValidName, isValidDob, isNotEmpty, isValidPhoneNumber
 };
