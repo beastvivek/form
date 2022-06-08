@@ -1,4 +1,3 @@
-const fs = require('fs');
 const { Field } = require('./field.js');
 const { Form } = require('./form.js');
 
@@ -32,14 +31,7 @@ const getForm = () => {
   return form;
 };
 
-const writeToFile = (form) => {
-  const details = form.getDetails();
-  fs.writeFileSync('./details.json', JSON.stringify(details), 'utf8');
-  console.log('Thank You!!');
-  process.exit();
-};
-
-const fillForm = (chunk, form, logger) => {
+const fillForm = (chunk, form, logger, writeToFile) => {
   const detail = chunk.split('\n')[0];
   form.fillField(detail);
   if (form.isFormFilled()) {
