@@ -30,7 +30,7 @@ class Form {
 
   fillField(response) {
     if (this.#currentField().validate(response)) {
-      this.#currentField().fillField(response);
+      this.#currentField().fillResponse(response);
       this.#index++;
     }
   }

@@ -32,8 +32,19 @@ class Field {
     return this.#validator(response);
   }
 
-  fillField(response) {
+  fillResponse(response) {
     this.#response = response;
+  }
+
+  #equalityCheck(otherField) {
+    return this.#title === otherField.#title &&
+      this.#question === otherField.#question &&
+      this.#validator === otherField.#validator &&
+      this.#parser === otherField.#parser;
+  }
+
+  equals(otherField) {
+    return otherField instanceof Field && this.#equalityCheck(otherField);
   }
 }
 
