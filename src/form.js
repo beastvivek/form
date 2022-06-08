@@ -34,6 +34,13 @@ class Form {
       this.#index++;
     }
   }
+
+  equals(otherForm) {
+    return otherForm instanceof Form &&
+      this.#fields.every((field, index) => {
+        return field.equals(otherForm.#fields[index]);
+      });
+  }
 }
 
 module.exports = { Form };

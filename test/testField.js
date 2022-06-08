@@ -3,32 +3,33 @@ const assert = require('assert');
 
 describe('Field', () => {
   const identity = element => element;
+  const alwaysTrue = () => true;
 
   describe('equals', () => {
     it('Should equate other field', () => {
-      const field1 = new Field('name', 'Enter name', identity, identity);
-      const field2 = new Field('name', 'Enter name', identity, identity);
+      const field1 = new Field('name', 'Enter name', alwaysTrue, identity);
+      const field2 = new Field('name', 'Enter name', alwaysTrue, identity);
       assert.ok(field1.equals(field2));
     });
   });
 
   describe('getTitle', () => {
     it('Should give the title of the field', () => {
-      const field = new Field('name', 'Enter name', identity, identity);
+      const field = new Field('name', 'Enter name', alwaysTrue, identity);
       assert.strictEqual(field.getTitle(), 'name');
     });
   });
 
   describe('getQuestion', () => {
     it('Should give the question of the field', () => {
-      const field = new Field('name', 'Enter name', identity, identity);
+      const field = new Field('name', 'Enter name', alwaysTrue, identity);
       assert.strictEqual(field.getQuestion(), 'Enter name');
     });
   });
 
   describe('getResponse', () => {
     it('Should give the response for field', () => {
-      const field = new Field('name', 'Enter name', identity, identity);
+      const field = new Field('name', 'Enter name', alwaysTrue, identity);
       field.fillResponse('vivek');
       assert.deepStrictEqual(field.getResponse(), {
         title: 'name',
@@ -53,13 +54,13 @@ describe('Field', () => {
 
   describe('isFilled', () => {
     it('Should return true if field is filled', () => {
-      const field = new Field('name', 'Enter name', identity, identity);
+      const field = new Field('name', 'Enter name', alwaysTrue, identity);
       field.fillResponse('vivek');
       assert.ok(field.isFilled() === true);
     });
 
     it('Should return false if field is not filled', () => {
-      const field = new Field('name', 'Enter name', identity, identity);
+      const field = new Field('name', 'Enter name', alwaysTrue, identity);
       assert.ok(field.isFilled() === false);
     });
   });
