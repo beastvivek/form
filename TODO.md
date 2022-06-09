@@ -1,11 +1,10 @@
 ## TODO
-  - [ ] Test Form fillField using multiLineField
-  - [ ] Give the invalid input message 
   - [ ] Separate chunk with new lines
-  - [ ] Remove end instead call a callback
   - [ ] Make main tests
 
 ## DONE
+  - [x] Remove end instead call a callback
+  - [x] Give the invalid input message 
   - [x] Create a multiLineField class for address
   - [x] Change name of the writeToFile and pass details instead of form
   - [x] Mock console log and callback for testing fill form

@@ -29,12 +29,19 @@ class Form {
   }
 
   fillField(response) {
-    if (this.#currentField().validate(response)) {
-      this.#currentField().fillResponse(response);
+    if (!this.#currentField().validate(response)) {
+      throw new Error('Invalid message');
     }
+    this.#currentField().fillResponse(response);
     if (this.#currentField().isFilled()) {
       this.#index++;
     }
+    // if (this.#currentField().validate(response)) {
+    //   this.#currentField().fillResponse(response);
+    // }
+    // if (this.#currentField().isFilled()) {
+    //   this.#index++;
+    // }
   }
 
   equals(otherForm) {

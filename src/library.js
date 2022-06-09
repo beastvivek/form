@@ -45,7 +45,11 @@ const createForm = () => {
 
 const fillForm = (chunk, form, logger, callBack) => {
   const detail = chunk.split('\n')[0];
-  form.fillField(detail);
+  try {
+    form.fillField(detail);
+  } catch (error) {
+    logger('Invalid Input');
+  }
   if (form.isFormFilled()) {
     callBack(form.getDetails());
     return;
