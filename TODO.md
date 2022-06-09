@@ -1,8 +1,8 @@
 ## TODO
-  - [ ] Separate chunk with new lines
   - [ ] Make main tests
 
 ## DONE
+  - [x] Separate chunk with new lines
   - [x] Remove end instead call a callback
   - [x] Give the invalid input message 
   - [x] Create a multiLineField class for address
