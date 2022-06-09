@@ -1,7 +1,8 @@
 ## TODO
-  - [ ] Make main tests
+  - [ ] Move forEach from fillForm to main
 
 ## DONE
+  - [x] Make main tests
   - [x] Separate chunk with new lines
   - [x] Remove end instead call a callback
   - [x] Give the invalid input message 
