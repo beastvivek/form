@@ -43,20 +43,17 @@ const createForm = () => {
   return form;
 };
 
-const fillForm = (chunk, form, logger, callBack) => {
-  const details = chunk.trim().split('\n');
-  details.forEach((detail) => {
-    try {
-      form.fillField(detail);
-    } catch (error) {
-      logger('Invalid Input');
-    }
-    if (form.isFormFilled()) {
-      callBack(form.getDetails());
-      return;
-    }
-    logger(form.currentQuestion());
-  });
+const fillForm = (detail, form, logger, callBack) => {
+  try {
+    form.fillField(detail);
+  } catch (error) {
+    logger('Invalid Input');
+  }
+  if (form.isFormFilled()) {
+    callBack(form.getDetails());
+    return;
+  }
+  logger(form.currentQuestion());
 };
 
 module.exports = {

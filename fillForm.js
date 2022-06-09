@@ -14,7 +14,10 @@ const main = () => {
   console.log(form.currentQuestion());
 
   process.stdin.on('data', (chunk) => {
-    fillForm(chunk, form, console.log, writeToFile);
+    const details = chunk.trim().split('\n');
+    details.forEach((detail) => {
+      fillForm(detail, form, console.log, writeToFile);
+    });
   });
 };
 

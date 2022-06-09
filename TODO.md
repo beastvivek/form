@@ -1,7 +1,8 @@
 ## TODO
-  - [ ] Move forEach from fillForm to main
+  - [ ] Change name of writeToFile and callBack function
 
 ## DONE
+  - [x] Move forEach from fillForm to main
   - [x] Make main tests
   - [x] Separate chunk with new lines
   - [x] Remove end instead call a callback
