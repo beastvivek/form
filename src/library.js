@@ -43,14 +43,14 @@ const createForm = () => {
   return form;
 };
 
-const fillForm = (detail, form, logger, callBack) => {
+const fillForm = (detail, form, logger, onCompletion) => {
   try {
     form.fillField(detail);
   } catch (error) {
     logger('Invalid Input');
   }
   if (form.isFormFilled()) {
-    callBack(form.getDetails());
+    onCompletion(form.getDetails());
     return;
   }
   logger(form.currentQuestion());

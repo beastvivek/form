@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { createForm, fillForm } = require('./src/library.js');
 
-const writeToFile = (details) => {
+const onCompletion = (details) => {
   fs.writeFileSync('./details.json', JSON.stringify(details), 'utf8');
   console.log('Thank You!!');
   process.exit();
@@ -16,7 +16,7 @@ const main = () => {
   process.stdin.on('data', (chunk) => {
     const details = chunk.trim().split('\n');
     details.forEach((detail) => {
-      fillForm(detail, form, console.log, writeToFile);
+      fillForm(detail, form, console.log, onCompletion);
     });
   });
 };

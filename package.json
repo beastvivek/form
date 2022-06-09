@@ -1,0 +1,25 @@
+{
+  "name": "form",
+  "version": "1.0.0",
+  "description": "fills the form",
+  "main": "fillForm.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beastvivek/form.git"
+  },
+  "author": "Vivek Bisht",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/beastvivek/form/issues"
+  },
+  "homepage": "https://github.com/beastvivek/form#readme",
+  "devDependencies": {
+    "mocha": "^10.0.0"
+  }
+}
